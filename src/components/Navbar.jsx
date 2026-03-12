@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
+import "../App.css";
 
 const Navbar = () => {
   return (
-    <nav style={{
-      padding: "1rem",
-      backgroundColor: "#333",
-      color: "white",
-      display: "flex",
-      gap: "2rem"
-    }}>
-      <Link to="/" style={{ color: "white", textDecoration: "none" }}>Home</Link>
-      <Link to="/cart" style={{ color: "white", textDecoration: "none" }}>Cart</Link>
+    <nav className="navbar">
+      <Link to="/" className="navbar-brand">
+        Botiga Online
+      </Link>
+      <div className="navbar-links">
+        <Link to="/">Home</Link>
+        <Link to="/cart">Cart</Link>
+      </div>
     </nav>
   );
 };

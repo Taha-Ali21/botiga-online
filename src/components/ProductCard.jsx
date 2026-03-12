@@ -1,36 +1,29 @@
-import { Card, CardMedia, CardContent, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
+import "../App.css";
 
-function ProductCard({ product }) {
-  // If product is undefined, don't render anything (prevents white screen)
-  if (!product) return null;
+const ProductCard = ({ product }) => {
+  const { addToCart } = useContext(CartContext);
 
   return (
-    <Card sx={{ maxWidth: 345, margin: 2 }}>
-      <CardMedia
-        component="img"
-        height="200"
-        image={product.imatge}
-        alt={product.nom}
-      />
-      <CardContent>
-        <Typography variant="h6">
-          {product.nom}
-        </Typography>
-        <Typography color="text.secondary">
-          {product.preu} €
-        </Typography>
-        <Button
-          variant="contained"
-          component={Link}
-          to={`/product/${product.id}`}
-          sx={{ mt: 2 }}
+    <div className="product-card">
+      <div className="product-image">
+        {/* Add image here if you have one */}
+      </div>
+      <div className="product-info">
+        <h3 className="product-name">{product.nom}</h3>
+        <p className="product-description">{product.descripcio}</p>
+        <div className="product-price">${product.preu}</div>
+        <button 
+          className="add-to-cart-btn"
+          onClick={() => addToCart(product)}
         >
-          Veure
-        </Button>
-      </CardContent>
-    </Card>
+          Add to Cart
+        </button>
+      </div>
+    </div>
   );
-}
+};
 
 export default ProductCard;
