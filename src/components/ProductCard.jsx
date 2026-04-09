@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import "../App.css";
@@ -6,15 +5,24 @@ import "../App.css";
 const ProductCard = ({ product }) => {
   const { addToCart } = useContext(CartContext);
 
+  // This approach safely accesses either format
+  const name = product.nom || product.name;
+  const description = product.descripcio || product.description;
+  const price = product.preu || product.price;
+  const image = product.imatge || product.image;
+
   return (
     <div className="product-card">
       <div className="product-image">
-        {/* Add image here if you have one */}
+        <img src={image} alt={name} />
       </div>
+
       <div className="product-info">
-        <h3 className="product-name">{product.nom}</h3>
-        <p className="product-description">{product.descripcio}</p>
-        <div className="product-price">${product.preu}</div>
+        <h3 className="product-name">{name}</h3>
+        <p className="product-description">{description}</p>
+        
+        <div className="product-price">{price}€</div>
+
         <button 
           className="add-to-cart-btn"
           onClick={() => addToCart(product)}

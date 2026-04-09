@@ -4,9 +4,9 @@ import { CartContext } from "../context/CartContext";
 import "../App.css";
 
 const Cart = () => {
-  const { cart, removeFromCart } = useContext(CartContext);
+  const { cart, removeFromCart, calculateTotal } = useContext(CartContext);
 
-  const total = cart.reduce((sum, item) => sum + item.preu, 0);
+  const total = calculateTotal();
 
   if (cart.length === 0) {
     return (
@@ -26,14 +26,31 @@ const Cart = () => {
       <div className="cart-header">
         <h1>Shopping Cart</h1>
       </div>
-      
-      {cart.map((item, index) => (
-        <div key={index} className="cart-item">
+
+      {cart.map((item) => (
+        <div key={item.id} className="cart-item">
+          
+          {/* ✅ Product Image */}
+          <img
+            src={item.imatge}
+            alt={item.nom}
+            className="cart-item-image"
+            width="100"
+          />
+
           <div className="cart-item-info">
             <div className="cart-item-name">{item.nom}</div>
-            <div className="cart-item-price">${item.preu}</div>
+            <div className="cart-item-price">
+              ${Number(item.preu).toFixed(2)}
+            </div>
+
+            {/* ✅ Quantity */}
+            <div className="cart-item-quantity">
+              Quantity: {item.quantity}
+            </div>
           </div>
-          <button 
+
+          <button
             className="cart-item-remove"
             onClick={() => removeFromCart(item.id)}
           >
@@ -41,9 +58,16 @@ const Cart = () => {
           </button>
         </div>
       ))}
-      
+
       <div className="cart-total">
         <h3>Total: ${total.toFixed(2)}</h3>
+      </div>
+
+      {/* ✅ Extra buttons */}
+      <div style={{ marginTop: "20px" }}>
+        <Link to="/" className="continue-shopping">
+          Continue Shopping
+        </Link>
       </div>
     </div>
   );
